@@ -1,5 +1,7 @@
+import type { HistoryData, PurchaseData, SaleData } from "./types";
+
 const express = require('express');
-const html_to_pdf = require('html-pdf-node');
+const wkhtmltopdf = require('wkhtmltopdf');
 const fs = require('fs');
 const path = require('path');
 
@@ -8,9 +10,9 @@ const PORT = 3000;
 
 app.use(express.json());
 
-const pembelianHtmlTemplate = fs.readFileSync(path.join(__dirname, 'pembelian.html'), 'utf8');
-const penjualanHtmlTemplate = fs.readFileSync(path.join(__dirname, 'penjualan.html'), 'utf8');
-const bulananHtmlTemplate = fs.readFileSync(path.join(__dirname, 'bulanan.html'), 'utf8');
+const pembelianHtmlTemplate = fs.readFileSync(path.join(__dirname, 'templates/pembelian.html'), 'utf8');
+const penjualanHtmlTemplate = fs.readFileSync(path.join(__dirname, 'templates/penjualan.html'), 'utf8');
+const bulananHtmlTemplate = fs.readFileSync(path.join(__dirname, 'templates/bulanan.html'), 'utf8');
 
 // Helper: Replace placeholders in HTML with payload data
 function fillPembelianTemplate(payload: any) {
@@ -115,41 +117,23 @@ function fillBulananTemplate(payload: any) {
   return html;
 }
 
-// {
-//   "leftAddress": {
-//     "name": "BUDI SANTOSO",
-//     "street": "Jalan Paradise",
-//     "area": "Sunter Agung, Tanjung Priok",
-//     "city": "Jakarta Utara",
-//     "country": "INDONESIA"
-//   },
-//   "rightAddress": {
-//     "manager": "PT Dana Kripto Indonesia",
-//     "email": "customer@yahoo.com",
-//     "periodStart": "1 Juni 2025",
-//     "periodEnd": "30 Juni 2025"
-//   },
-//   "transaction": {
-//     "type": "Pembelian",
-//     "number": "V6G57NBT",
-//     "amount": "Rp 5.000.000,00",
-//     "fee": "Rp 55.500,00",
-//     "ppnPercent": "0,11%",
-//     "ppnAmount": "5.500",
-//     "subscriptionFeePercent": "1%",
-//     "subscriptionFeeAmount": "50.000",
-//     "netAmount": "Rp 4.944.500,00",
-//     "unit": "3.390,84",
-//     "navPerUnit": "Rp 1.474,56"
-//   }
-// }
+// Helper to generate PDF buffer from HTML using wkhtmltopdf
+function generatePdfFromHtml(html: string, options = {}): Promise<Buffer> {
+  return new Promise((resolve, reject) => {
+    const chunks: Buffer[] = [];
+    wkhtmltopdf(html, { pageSize: 'A4', ...options })
+      .on('data', chunk => chunks.push(chunk))
+      .on('end', () => resolve(Buffer.concat(chunks)))
+      .on('error', reject);
+  });
+}
+
+
 app.post('/pembelian', async (req, res) => {
   try {
-    const payload = req.body;
+    const payload: PurchaseData = req.body;
     const html = fillPembelianTemplate(payload);
-    const options = { format: 'A4', printBackground: true };
-    const file = { content: html };
-    const pdfBuffer = await html_to_pdf.generatePdf(file, options);
+    const pdfBuffer = await generatePdfFromHtml(html, { printMediaType: true });
     res.setHeader('Content-Type', 'application/pdf');
     res.setHeader('Content-Disposition', 'attachment; filename=Surat_Konfirmasi_Pembelian.pdf');
     res.send(pdfBuffer);
@@ -158,49 +142,11 @@ app.post('/pembelian', async (req, res) => {
   }
 });
 
-// {
-//   "leftAddress": {
-//     "name": "BUDI SANTOSO",
-//     "street": "Jalan Paradise",
-//     "area": "Sunter Agung, Tanjung Priok",
-//     "city": "Jakarta Utara",
-//     "country": "INDONESIA"
-//   },
-//   "rightAddress": {
-//     "manager": "PT Dana Kripto Indonesia",
-//     "email": "customer@yahoo.com",
-//     "periodStart": "1 Juni 2025",
-//     "periodEnd": "30 Juni 2025"
-//   },
-//   "transaction": {
-//     "type": "Penjualan",
-//     "number": "V6G57NBT",
-//     "unit": "3.390,84",
-//     "navPerUnit": "Rp 1.474,56",
-//     "amount": "Rp 5.000.000,00",
-//     "fee": "Rp 55.500,00",
-//     "pphPercent": "0,10%",
-//     "pphAmount": "5.500,00",
-//     "redemptionFeePercent": "1%",
-//     "redemptionFeeAmount": "50.000,00",
-//     "netAmount": "Rp 4.944.500,00"
-//   },
-//   "bank": {
-//     "name": "Bank Central Asia",
-//     "account": "1234567890",
-//     "accountName": "Budi Santoso",
-//     "verifiedAmount": "Rp 4.944.500,00",
-//     "paymentDateTime": "5 Mei 2025, 11:24 WIB",
-//     "reference": "8AD9X7WPLT"
-//   }
-// }
 app.post('/penjualan', async (req, res) => {
   try {
-    const payload = req.body;
+    const payload: SaleData = req.body;
     const html = fillPenjualanTemplate(payload);
-    const options = { format: 'A4', printBackground: true };
-    const file = { content: html };
-    const pdfBuffer = await html_to_pdf.generatePdf(file, options);
+    const pdfBuffer = await generatePdfFromHtml(html, { printMediaType: true });
     res.setHeader('Content-Type', 'application/pdf');
     res.setHeader('Content-Disposition', 'attachment; filename=Surat_Konfirmasi_Penjualan.pdf');
     res.send(pdfBuffer);
@@ -209,46 +155,12 @@ app.post('/penjualan', async (req, res) => {
   }
 });
 
-// {
-//   "leftAddress": {
-//     "name": "BUDI SANTOSO",
-//     "street": "Jalan Paradise",
-//     "area": "Sunter Agung, Tanjung Priok",
-//     "city": "Jakarta Utara",
-//     "country": "INDONESIA"
-//   },
-//   "rightAddress": {
-//     "manager": "PT Dana Kripto Indonesia",
-//     "email": "customer@yahoo.com",
-//     "periodStart": "1 Juni 2025",
-//     "periodEnd": "30 Juni 2025"
-//   },
-//   "transactions": [
-//     {
-//       "date": "01-05-2025",
-//       "description": "Saldo Awal",
-//       "number": "",
-//       "navPerUnit": "Rp 1.500,00",
-//       "unit": "2.000,00",
-//       "marketValue": "Rp 3.000.000,00"
-//     },
-//     {
-//       "date": "30-06-2025",
-//       "description": "Saldo Akhir",
-//       "number": "",
-//       "navPerUnit": "Rp 1.450,00",
-//       "unit": "2.000,00",
-//       "marketValue": "Rp 2.900.000,00"
-//     }
-//   ]
-// }
+
 app.post('/bulanan', async (req, res) => {
   try {
-    const payload = req.body;
+    const payload: HistoryData = req.body;
     const html = fillBulananTemplate(payload);
-    const options = { format: 'A4', printBackground: true };
-    const file = { content: html };
-    const pdfBuffer = await html_to_pdf.generatePdf(file, options);
+    const pdfBuffer = await generatePdfFromHtml(html, { printMediaType: true });
     res.setHeader('Content-Type', 'application/pdf');
     res.setHeader('Content-Disposition', 'attachment; filename=Surat_Konfirmasi_Bulanan.pdf');
     res.send(pdfBuffer);
