@@ -7,8 +7,14 @@ const path = require('path');
 
 const app = express();
 const PORT = 3000;
+// const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
+
+// Configure wkhtmltopdf to use our wrapper script in Cloud Run environment
+if (process.env.NODE_ENV === 'production') {
+  wkhtmltopdf.command = '/usr/local/bin/wkhtmltopdf-xvfb';
+}
 
 const pembelianHtmlTemplate = fs.readFileSync(path.join(__dirname, 'templates/pembelian.html'), 'utf8');
 const penjualanHtmlTemplate = fs.readFileSync(path.join(__dirname, 'templates/penjualan.html'), 'utf8');
@@ -117,27 +123,63 @@ function fillBulananTemplate(payload: any) {
   return html;
 }
 
-// Helper to generate PDF buffer from HTML using wkhtmltopdf
+// Enhanced PDF generation function with better error handling
 function generatePdfFromHtml(html: string, options = {}): Promise<Buffer> {
   return new Promise((resolve, reject) => {
     const chunks: Buffer[] = [];
-    wkhtmltopdf(html, { pageSize: 'A4', ...options })
-      .on('data', chunk => chunks.push(chunk))
-      .on('end', () => resolve(Buffer.concat(chunks)))
-      .on('error', reject);
+
+    try {
+      wkhtmltopdf.command = '/usr/local/bin/wkhtmltopdf-xvfb';
+      const pdfStream = wkhtmltopdf(html, {
+        pageSize: 'A4',
+        printMediaType: true,
+        // Additional options that might help with rendering
+        disableJavascript: true,
+        noStopSlowScripts: true,
+        encoding: 'UTF-8',
+        ...options
+      });
+
+      pdfStream
+        .on('data', chunk => chunks.push(chunk))
+        .on('end', () => {
+          if (chunks.length === 0) {
+            reject(new Error('PDF generation produced empty result'));
+          } else {
+            resolve(Buffer.concat(chunks));
+          }
+        })
+        .on('error', (err) => {
+          console.error('PDF generation error:', err);
+          reject(err);
+        });
+
+    } catch (err) {
+      console.error('Exception during PDF generation setup:', err);
+      reject(err);
+    }
   });
 }
-
 
 app.post('/pembelian', async (req, res) => {
   try {
     const payload: PurchaseData = req.body;
+    console.log('Received payload:', payload);
     const html = fillPembelianTemplate(payload);
-    const pdfBuffer = await generatePdfFromHtml(html, { printMediaType: true });
+    let pdfBuffer;
+    try {
+      pdfBuffer = await generatePdfFromHtml(html);
+    }
+    catch (error) {
+      console.error('Error generating PDF:', error);
+      return res.status(500).json({ error: 'Error generating PDF', details: error.toString() });
+    }
+
     res.setHeader('Content-Type', 'application/pdf');
     res.setHeader('Content-Disposition', 'attachment; filename=Surat_Konfirmasi_Pembelian.pdf');
     res.send(pdfBuffer);
   } catch (error) {
+    console.error('Pembelian endpoint error:', error);
     res.status(500).json({ error: 'Error generating PDF', details: error.toString() });
   }
 });
@@ -146,29 +188,40 @@ app.post('/penjualan', async (req, res) => {
   try {
     const payload: SaleData = req.body;
     const html = fillPenjualanTemplate(payload);
-    const pdfBuffer = await generatePdfFromHtml(html, { printMediaType: true });
+    const pdfBuffer = await generatePdfFromHtml(html);
     res.setHeader('Content-Type', 'application/pdf');
     res.setHeader('Content-Disposition', 'attachment; filename=Surat_Konfirmasi_Penjualan.pdf');
     res.send(pdfBuffer);
   } catch (error) {
+    console.error('Penjualan endpoint error:', error);
     res.status(500).json({ error: 'Error generating PDF', details: error.toString() });
   }
 });
-
 
 app.post('/bulanan', async (req, res) => {
   try {
     const payload: HistoryData = req.body;
     const html = fillBulananTemplate(payload);
-    const pdfBuffer = await generatePdfFromHtml(html, { printMediaType: true });
+    const pdfBuffer = await generatePdfFromHtml(html);
     res.setHeader('Content-Type', 'application/pdf');
     res.setHeader('Content-Disposition', 'attachment; filename=Surat_Konfirmasi_Bulanan.pdf');
     res.send(pdfBuffer);
   } catch (error) {
+    console.error('Bulanan endpoint error:', error);
     res.status(500).json({ error: 'Error generating PDF', details: error.toString() });
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`PDF API server running on http://localhost:${PORT}`);
+// Health check endpoint for Cloud Run
+app.get('/health', (req, res) => {
+  res.status(200).send('Service is healthy');
 });
+
+try {
+  app.listen(PORT, () => {
+    console.log(`PDF API server running on http://0.0.0.0:${PORT}`);
+  });
+} catch (error) {
+  console.error('Server startup error:', error);
+  process.exit(1);
+}
