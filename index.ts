@@ -115,39 +115,29 @@ function fillBulananTemplate(payload: any) {
   return html;
 }
 
-// {
-//   "leftAddress": {
-//     "name": "BUDI SANTOSO",
-//     "street": "Jalan Paradise",
-//     "area": "Sunter Agung, Tanjung Priok",
-//     "city": "Jakarta Utara",
-//     "country": "INDONESIA"
-//   },
-//   "rightAddress": {
-//     "manager": "PT Dana Kripto Indonesia",
-//     "email": "customer@yahoo.com",
-//     "periodStart": "1 Juni 2025",
-//     "periodEnd": "30 Juni 2025"
-//   },
-//   "transaction": {
-//     "type": "Pembelian",
-//     "number": "V6G57NBT",
-//     "amount": "Rp 5.000.000,00",
-//     "fee": "Rp 55.500,00",
-//     "ppnPercent": "0,11%",
-//     "ppnAmount": "5.500",
-//     "subscriptionFeePercent": "1%",
-//     "subscriptionFeeAmount": "50.000",
-//     "netAmount": "Rp 4.944.500,00",
-//     "unit": "3.390,84",
-//     "navPerUnit": "Rp 1.474,56"
-//   }
-// }
 app.post('/pembelian', async (req, res) => {
   try {
     const payload = req.body;
+    const asHtml = req.query.asHtml || false; // or use req.query.asHtml for query param
+
     const html = fillPembelianTemplate(payload);
-    const options = { format: 'A4', printBackground: true };
+
+    if (asHtml) {
+      res.setHeader('Content-Type', 'text/html');
+      res.send(html);
+      return;
+    }
+
+    const options = {
+      format: 'A4',
+      printBackground: true,
+      args: [
+        '--no-sandbox',
+        '--single-process',
+        '--disable-gpu',
+        '--disable-dev-shm-usage'
+      ]
+    };
     const file = { content: html };
     const pdfBuffer = await html_to_pdf.generatePdf(file, options);
     res.setHeader('Content-Type', 'application/pdf');
@@ -158,46 +148,19 @@ app.post('/pembelian', async (req, res) => {
   }
 });
 
-// {
-//   "leftAddress": {
-//     "name": "BUDI SANTOSO",
-//     "street": "Jalan Paradise",
-//     "area": "Sunter Agung, Tanjung Priok",
-//     "city": "Jakarta Utara",
-//     "country": "INDONESIA"
-//   },
-//   "rightAddress": {
-//     "manager": "PT Dana Kripto Indonesia",
-//     "email": "customer@yahoo.com",
-//     "periodStart": "1 Juni 2025",
-//     "periodEnd": "30 Juni 2025"
-//   },
-//   "transaction": {
-//     "type": "Penjualan",
-//     "number": "V6G57NBT",
-//     "unit": "3.390,84",
-//     "navPerUnit": "Rp 1.474,56",
-//     "amount": "Rp 5.000.000,00",
-//     "fee": "Rp 55.500,00",
-//     "pphPercent": "0,10%",
-//     "pphAmount": "5.500,00",
-//     "redemptionFeePercent": "1%",
-//     "redemptionFeeAmount": "50.000,00",
-//     "netAmount": "Rp 4.944.500,00"
-//   },
-//   "bank": {
-//     "name": "Bank Central Asia",
-//     "account": "1234567890",
-//     "accountName": "Budi Santoso",
-//     "verifiedAmount": "Rp 4.944.500,00",
-//     "paymentDateTime": "5 Mei 2025, 11:24 WIB",
-//     "reference": "8AD9X7WPLT"
-//   }
-// }
 app.post('/penjualan', async (req, res) => {
   try {
     const payload = req.body;
+    const asHtml = req.query.asHtml || false; // or use req.query.asHtml for query param
+
+
     const html = fillPenjualanTemplate(payload);
+
+    if (asHtml) {
+      res.setHeader('Content-Type', 'text/html');
+      res.send(html);
+      return;
+    }
     const options = { format: 'A4', printBackground: true };
     const file = { content: html };
     const pdfBuffer = await html_to_pdf.generatePdf(file, options);
@@ -245,7 +208,14 @@ app.post('/penjualan', async (req, res) => {
 app.post('/bulanan', async (req, res) => {
   try {
     const payload = req.body;
+    const asHtml = req.query.asHtml || false; // or use req.query.asHtml for query param
+
     const html = fillBulananTemplate(payload);
+    if (asHtml) {
+      res.setHeader('Content-Type', 'text/html');
+      res.send(html);
+      return;
+    }
     const options = { format: 'A4', printBackground: true };
     const file = { content: html };
     const pdfBuffer = await html_to_pdf.generatePdf(file, options);

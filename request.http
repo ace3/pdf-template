@@ -1,0 +1,77 @@
+POST /penjualan?asHtml=true HTTP/1.1
+Host: localhost:3000
+# Authorization: Bearer YOUR_ACCESS_TOKEN
+Content-Type: application/json
+
+{
+  "leftAddress": {
+    "name": "BUDI SANTOSO",
+    "street": "Jalan Paradise",
+    "area": "Sunter Agung, Tanjung Priok",
+    "city": "Jakarta Utara",
+    "country": "INDONESIA"
+  },
+  "rightAddress": {
+    "manager": "PT Dana Kripto Indonesia",
+    "email": "customer@yahoo.com",
+    "periodStart": "1 Juni 2025",
+    "periodEnd": "30 Juni 2025"
+  },
+  "transaction": {
+    "type": "Penjualan",
+    "number": "V6G57NBT",
+    "unit": "3.390,84",
+    "navPerUnit": "Rp 1.474,56",
+    "amount": "Rp 5.000.000,00",
+    "fee": "Rp 55.500,00",
+    "pphPercent": "0,10%",
+    "pphAmount": "5.500,00",
+    "redemptionFeePercent": "1%",
+    "redemptionFeeAmount": "50.000,00",
+    "netAmount": "Rp 4.944.500,00"
+  },
+  "bank": {
+    "name": "Bank Central Asia",
+    "account": "1234567890",
+    "accountName": "Budi Santoso",
+    "verifiedAmount": "Rp 4.944.500,00",
+    "paymentDateTime": "5 Mei 2025, 11:24 WIB",
+    "reference": "8AD9X7WPLT"
+  }
+}
+### 
+
+POST /pembelian?asHtml=true HTTP/1.1
+Host: localhost:3000
+# Authorization: Bearer YOUR_ACCESS_TOKEN
+Content-Type: application/json
+
+{
+  "leftAddress": {
+    "name": "BUDI SANTOSO",
+    "street": "Jalan Paradise",
+    "area": "Sunter Agung, Tanjung Priok",
+    "city": "Jakarta Utara",
+    "country": "INDONESIA"
+  },
+  "rightAddress": {
+    "manager": "PT Dana Kripto Indonesia",
+    "email": "customer@yahoo.com",
+    "periodStart": "1 Juni 2025",
+    "periodEnd": "30 Juni 2025"
+  },
+  "transaction": {
+    "type": "Pembelian",
+    "number": "V6G57NBT",
+    "amount": "Rp 5.000.000,00",
+    "fee": "Rp 55.500,00",
+    "ppnPercent": "0,11%",
+    "ppnAmount": "5.500",
+    "subscriptionFeePercent": "1%",
+    "subscriptionFeeAmount": "50.000",
+    "netAmount": "Rp 4.944.500,00",
+    "unit": "3.390,84",
+    "navPerUnit": "Rp 1.474,56"
+  }
+}
+
