@@ -57,8 +57,7 @@ Content-Type: application/json
   "rightAddress": {
     "manager": "PT Dana Kripto Indonesia",
     "email": "customer@yahoo.com",
-    "periodStart": "1 Juni 2025",
-    "periodEnd": "30 Juni 2025"
+    "transactionDate": "1 Juni 2025"
   },
   "transaction": {
     "type": "Pembelian",
@@ -66,6 +65,7 @@ Content-Type: application/json
     "amount": "Rp 5.000.000,00",
     "fee": "Rp 55.500,00",
     "ppnPercent": "0,11%",
+    "product":"NOBI Dana Kripto Indeks Kelas A",
     "ppnAmount": "5.500",
     "subscriptionFeePercent": "1%",
     "subscriptionFeeAmount": "50.000",
@@ -75,3 +75,39 @@ Content-Type: application/json
   }
 }
 
+###
+POST /bulanan?asHtml=true HTTP/1.1
+Host: localhost:3000
+{
+  "leftAddress": {
+    "name": "BUDI SANTOSO",
+    "street": "Jalan Paradise",
+    "area": "Sunter Agung, Tanjung Priok",
+    "city": "Jakarta Utara",
+    "country": "INDONESIA"
+  },
+  "rightAddress": {
+    "manager": "PT Dana Kripto Indonesia",
+    "email": "customer@yahoo.com",
+    "periodStart": "1 Juni 2025",
+    "periodEnd": "30 Juni 2025"
+  },
+  "transactions": [
+    {
+      "date": "01-05-2025",
+      "description": "Saldo Awal",
+      "number": "",
+      "navPerUnit": "Rp 1.500,00",
+      "unit": "2.000,00",
+      "marketValue": "Rp 3.000.000,00"
+    },
+    {
+      "date": "30-06-2025",
+      "description": "Saldo Akhir",
+      "number": "",
+      "navPerUnit": "Rp 1.450,00",
+      "unit": "2.000,00",
+      "marketValue": "Rp 2.900.000,00"
+    }
+  ]
+}

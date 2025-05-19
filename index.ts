@@ -24,14 +24,16 @@ function fillPembelianTemplate(payload: any) {
     .replace(/{{leftAddress\.country}}/g, payload.leftAddress.country)
     .replace(/{{rightAddress\.manager}}/g, payload.rightAddress.manager)
     .replace(/{{rightAddress\.email}}/g, payload.rightAddress.email)
-    .replace(/{{rightAddress\.periodStart}}/g, payload.rightAddress.periodStart)
-    .replace(/{{rightAddress\.periodEnd}}/g, payload.rightAddress.periodEnd)
+    .replace(/{{rightAddress\.transactionDate}}/g, payload.rightAddress.transactionDate)
+    // .replace(/{{rightAddress\.periodStart}}/g, payload.rightAddress.periodStart)
+    // .replace(/{{rightAddress\.periodEnd}}/g, payload.rightAddress.periodEnd)
     .replace(/{{transaction\.type}}/g, payload.transaction.type)
     .replace(/{{transaction\.number}}/g, payload.transaction.number)
     .replace(/{{transaction\.amount}}/g, payload.transaction.amount)
     .replace(/{{transaction\.fee}}/g, payload.transaction.fee)
     .replace(/{{transaction\.ppnPercent}}/g, payload.transaction.ppnPercent)
     .replace(/{{transaction\.ppnAmount}}/g, payload.transaction.ppnAmount)
+    .replace(/{{transaction\.product}}/g, payload.transaction.product)
     .replace(/{{transaction\.subscriptionFeePercent}}/g, payload.transaction.subscriptionFeePercent)
     .replace(/{{transaction\.subscriptionFeeAmount}}/g, payload.transaction.subscriptionFeeAmount)
     .replace(/{{transaction\.netAmount}}/g, payload.transaction.netAmount)
@@ -172,39 +174,7 @@ app.post('/penjualan', async (req, res) => {
   }
 });
 
-// {
-//   "leftAddress": {
-//     "name": "BUDI SANTOSO",
-//     "street": "Jalan Paradise",
-//     "area": "Sunter Agung, Tanjung Priok",
-//     "city": "Jakarta Utara",
-//     "country": "INDONESIA"
-//   },
-//   "rightAddress": {
-//     "manager": "PT Dana Kripto Indonesia",
-//     "email": "customer@yahoo.com",
-//     "periodStart": "1 Juni 2025",
-//     "periodEnd": "30 Juni 2025"
-//   },
-//   "transactions": [
-//     {
-//       "date": "01-05-2025",
-//       "description": "Saldo Awal",
-//       "number": "",
-//       "navPerUnit": "Rp 1.500,00",
-//       "unit": "2.000,00",
-//       "marketValue": "Rp 3.000.000,00"
-//     },
-//     {
-//       "date": "30-06-2025",
-//       "description": "Saldo Akhir",
-//       "number": "",
-//       "navPerUnit": "Rp 1.450,00",
-//       "unit": "2.000,00",
-//       "marketValue": "Rp 2.900.000,00"
-//     }
-//   ]
-// }
+
 app.post('/bulanan', async (req, res) => {
   try {
     const payload = req.body;

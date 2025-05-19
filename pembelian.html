@@ -876,7 +876,7 @@
           <span class="c11">Email : {{rightAddress.email}}</span>
         </p>
         <p class="c24 c20 c29">
-          <span class="c11">Periode Pelaporan : {{rightAddress.periodStart}} s/d {{rightAddress.periodEnd}}</span>
+          <span class="c11">Tanggal Transaksi : {{rightAddress.transactionDate}}</span>
         </p>
       </td>
     </tr>
@@ -891,7 +891,7 @@
       <tr class="c3">
         <td class="c18" colspan="2" rowspan="1">
           <h2 class="c2" id="h.hd6bfcgl5bou">
-            <span class="c8 c45">NOBI Dana Kripto Indeks Kelas A</span>
+            <span class="c8 c45">{{transaction.product}}</span>
           </h2>
           <p class="c10 c20">
             <span class="c43">PT Dana Kripto Indonesia</span>
@@ -1011,7 +1011,7 @@
             bukti kepemilikan Unit Kripto NOBI Dana Kripto
             Indeks Kelas A. Manajer Dana Kripto tidak akan
             menerbitkan sertifikat sebagai bukti kepemilikan
-            Unit Kripto NOBI Dana Kripto Indeks Kelas A.</span>
+            Unit Kripto {{transaction.product}}.</span>
         </p>
       </td>
     </tr>
