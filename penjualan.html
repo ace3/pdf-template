@@ -244,7 +244,7 @@
       border-right-width: 1pt;
       border-left-color: #00bf91;
       vertical-align: middle;
-      border-right-color: #000000;
+      border-right-color: #00bf91;
       border-left-width: 1pt;
       border-top-style: solid;
       background-color: #00bf91;
@@ -748,15 +748,15 @@
   <table class="c23">
     <tr class="c22">
       <td class="c32" colspan="1" rowspan="1">
-        <p class="c17"><span class="c28">{{leftAddress.name}}</span><span
-            class="c19"><br>{{leftAddress.street}}<br>{{leftAddress.area}}</span></p>
-        <p class="c17"><span class="c19">{{leftAddress.city}} <br>{{leftAddress.country}}</span></p>
+        <p class="c17"><span class="c28">{{leftAddress.name}}</span><span class="c19"><br>{{leftAddress.street}}
+            <!-- <br>{{leftAddress.area}} -->
+          </span></p>
+        <!-- <p class="c17"><span class="c19">{{leftAddress.city}} <br>{{leftAddress.country}}</span></p> -->
       </td>
       <td class="c24" colspan="1" rowspan="1">
         <p class="c3 c4"><span class="c19">Manajer Dana Kripto : {{rightAddress.manager}}</span></p>
         <p class="c3 c4"><span class="c19">Email : {{rightAddress.email}}</span></p>
-        <p class="c3 c4"><span class="c19">Periode Pelaporan : {{rightAddress.periodStart}} s/d
-            {{rightAddress.periodEnd}}</span></p>
+        <p class="c3 c4"><span class="c19">Tanggal Transaksi : {{rightAddress.transactionDate}}</span></p>
       </td>
     </tr>
   </table>

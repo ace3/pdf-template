@@ -14,8 +14,7 @@ Content-Type: application/json
   "rightAddress": {
     "manager": "PT Dana Kripto Indonesia",
     "email": "customer@yahoo.com",
-    "periodStart": "1 Juni 2025",
-    "periodEnd": "30 Juni 2025"
+    "transactionDate": "1 Juni 2025"
   },
   "transaction": {
     "type": "Penjualan",
@@ -26,6 +25,7 @@ Content-Type: application/json
     "fee": "Rp 55.500,00",
     "pphPercent": "0,10%",
     "pphAmount": "5.500,00",
+    "product":"NOBI Dana Kripto Indeks Kelas A",
     "redemptionFeePercent": "1%",
     "redemptionFeeAmount": "50.000,00",
     "netAmount": "Rp 4.944.500,00"
@@ -42,8 +42,7 @@ Content-Type: application/json
 ### 
 
 POST /pembelian HTTP/1.1
-# Host: localhost:3000
-Host: https://template.ikn.nobi.id
+Host: localhost:3000
 # Authorization: Bearer YOUR_ACCESS_TOKEN
 Content-Type: application/json
 
