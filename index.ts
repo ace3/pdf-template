@@ -135,7 +135,7 @@ app.post('/pembelian', async (req, res) => {
       printBackground: true,
       args: [
         '--no-sandbox',
-        '--single-process',
+        // '--single-process',
         '--disable-gpu',
         '--disable-dev-shm-usage'
       ]

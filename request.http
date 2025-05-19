@@ -41,8 +41,9 @@ Content-Type: application/json
 }
 ### 
 
-POST /pembelian?asHtml=true HTTP/1.1
-Host: localhost:3000
+POST /pembelian HTTP/1.1
+# Host: localhost:3000
+Host: https://template.ikn.nobi.id
 # Authorization: Bearer YOUR_ACCESS_TOKEN
 Content-Type: application/json
 
