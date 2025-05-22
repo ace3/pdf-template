@@ -77,7 +77,6 @@ function fillPenjualanTemplate(payload: any) {
 
   return html;
 }
-
 function fillBulananTemplate(payload: any) {
   let html = bulananHtmlTemplate;
 
@@ -92,29 +91,39 @@ function fillBulananTemplate(payload: any) {
     .replace(/{{rightAddress\.periodStart}}/g, payload.rightAddress.periodStart)
     .replace(/{{rightAddress\.periodEnd}}/g, payload.rightAddress.periodEnd);
 
-  // Replace transactions array
-  const txRows = (payload.transactions || []).map(tx => `
-    <tr>
-      <td class="c15" colspan="1" rowspan="1">
-        <p class="c10"><span class="c2">${tx.date}</span></p>
-      </td>
-      <td class="c13" colspan="1" rowspan="1">
-        <p class="c10"><span class="c2">${tx.description}</span></p>
-      </td>
-      <td class="c4" colspan="1" rowspan="1">
-        <p class="c11 c14"><span class="c2">${tx.number || ''}</span></p>
-      </td>
-      <td class="c4" colspan="1" rowspan="1">
-        <p class="c8"><span class="c2">${tx.navPerUnit}</span></p>
-      </td>
-      <td class="c4" colspan="1" rowspan="1">
-        <p class="c8 c17"><span class="c2">${tx.unit}</span></p>
-      </td>
-      <td class="c4" colspan="1" rowspan="1">
-        <p class="c8"><span class="c2">${tx.marketValue}</span></p>
-      </td>
-    </tr>
-  `).join('');
+  const txRows = (payload.transactions || []).map(tx => {
+    if (tx.noActivity) {
+      return `
+        <tr class="c18">
+          <td class="c20" colspan="6" rowspan="1">
+            <p class="c10"><span class="c2">TIDAK TERDAPAT AKTIVITAS TRANSAKSI SELAMA PERIODE INI</span></p>
+          </td>
+        </tr>
+      `;
+    }
+    return `
+      <tr>
+        <td class="c15" colspan="1" rowspan="1">
+          <p class="c10"><span class="c2">${tx.date || ''}</span></p>
+        </td>
+        <td class="c13" colspan="1" rowspan="1">
+          <p class="c10"><span class="c2">${tx.description || ''}</span></p>
+        </td>
+        <td class="c4" colspan="1" rowspan="1">
+          <p class="c11 c14"><span class="c2">${tx.number || ''}</span></p>
+        </td>
+        <td class="c4" colspan="1" rowspan="1">
+          <p class="c8"><span class="c2">${tx.navPerUnit || ''}</span></p>
+        </td>
+        <td class="c4" colspan="1" rowspan="1">
+          <p class="c8 c17"><span class="c2">${tx.unit || ''}</span></p>
+        </td>
+        <td class="c4" colspan="1" rowspan="1">
+          <p class="c8"><span class="c2">${tx.marketValue || ''}</span></p>
+        </td>
+      </tr>
+    `;
+  }).join('');
   html = html.replace(/{{#transactions}}[\s\S]*{{\/transactions}}/, txRows);
 
   return html;
@@ -138,7 +147,7 @@ app.post('/pembelian', async (req, res) => {
       printBackground: true,
       args: [
         '--no-sandbox',
-        '--single-process',
+        // '--single-process',
         '--disable-gpu',
         '--disable-dev-shm-usage'
       ]
