@@ -88,6 +88,7 @@ function fillBulananTemplate(payload: any) {
     .replace(/{{leftAddress\.country}}/g, payload.leftAddress.country)
     .replace(/{{rightAddress\.manager}}/g, payload.rightAddress.manager)
     .replace(/{{rightAddress\.email}}/g, payload.rightAddress.email)
+    .replace(/{{product}}/g, payload.product)
     .replace(/{{rightAddress\.periodStart}}/g, payload.rightAddress.periodStart)
     .replace(/{{rightAddress\.periodEnd}}/g, payload.rightAddress.periodEnd);
 
@@ -137,7 +138,7 @@ app.post('/pembelian', async (req, res) => {
       printBackground: true,
       args: [
         '--no-sandbox',
-        // '--single-process',
+        '--single-process',
         '--disable-gpu',
         '--disable-dev-shm-usage'
       ]
