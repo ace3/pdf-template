@@ -96,7 +96,7 @@ function fillBulananTemplate(payload: any) {
       return `
         <tr class="c18">
           <td class="c20" colspan="6" rowspan="1">
-            <p class="c10"><span class="c2">TIDAK TERDAPAT AKTIVITAS TRANSAKSI SELAMA PERIODE INI</span></p>
+            <p class="c10"><span class="c3">TIDAK TERDAPAT AKTIVITAS TRANSAKSI SELAMA PERIODE INI</span></p>
           </td>
         </tr>
       `;
@@ -104,22 +104,22 @@ function fillBulananTemplate(payload: any) {
     return `
       <tr>
         <td class="c15" colspan="1" rowspan="1">
-          <p class="c10"><span class="c2">${tx.date || ''}</span></p>
+          <p class="c10"><span class="c3">${tx.date || ''}</span></p>
         </td>
         <td class="c13" colspan="1" rowspan="1">
-          <p class="c10"><span class="c2">${tx.description || ''}</span></p>
+          <p class="c10"><span class="c3">${tx.description || ''}</span></p>
         </td>
         <td class="c4" colspan="1" rowspan="1">
-          <p class="c11 c14"><span class="c2">${tx.number || ''}</span></p>
+          <p class="c11 c14"><span class="c3">${tx.number || ''}</span></p>
         </td>
         <td class="c4" colspan="1" rowspan="1">
-          <p class="c8"><span class="c2">${tx.navPerUnit || ''}</span></p>
+          <p class="c8"><span class="c3">${tx.navPerUnit || ''}</span></p>
         </td>
         <td class="c4" colspan="1" rowspan="1">
-          <p class="c8 c17"><span class="c2">${tx.unit || ''}</span></p>
+          <p class="c8 c17"><span class="c3">${tx.unit || ''}</span></p>
         </td>
         <td class="c4" colspan="1" rowspan="1">
-          <p class="c8"><span class="c2">${tx.marketValue || ''}</span></p>
+          <p class="c8"><span class="c3">${tx.marketValue || ''}</span></p>
         </td>
       </tr>
     `;

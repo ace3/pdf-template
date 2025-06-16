@@ -136,7 +136,7 @@
       font-weight: 700;
       text-decoration: none;
       vertical-align: baseline;
-      font-size: 14pt;
+      font-size: 9pt;
       font-family: "Arial";
       font-style: normal
     }
@@ -282,6 +282,16 @@
       font-weight: 700
     }
 
+    .c28 {
+      color: #000000;
+      font-weight: 700;
+      text-decoration: none;
+      vertical-align: baseline;
+      font-size: 9pt;
+      font-family: "Arial";
+      font-style: normal
+    }
+
     .title {
       padding-top: 0pt;
       color: #000000;
@@ -416,14 +426,14 @@
   <table class="c26">
     <tr class="c12">
       <td class="c21" colspan="1" rowspan="1">
-        <p class="c10"><span class="c27">{{leftAddress.name}}</span><span class="c2"><br>{{leftAddress.street}}
+        <p class="c10"><span class="c28">{{leftAddress.name}}</span><span class="c3"><br>{{leftAddress.street}}
             <!-- <br>{{leftAddress.area}} -->
           </span></p>
         <!-- <p class="c10"><span class="c2">{{leftAddress.city}} <br>{{leftAddress.country}}</span></p> -->
       </td>
       <td class="c16" colspan="1" rowspan="1">
-        <p class="c6"><span class="c2">Manajer Dana Kripto : {{rightAddress.manager}}</span></p>
-        <p class="c6"><span class="c2">Email : {{rightAddress.email}}</span></p>
+        <p class="c6"><span class="c3">Manajer Dana Kripto : {{rightAddress.manager}}</span></p>
+        <p class="c6"><span class="c3">Email : {{rightAddress.email}}</span></p>
         <p class="c6"><span class="c3">Periode Pelaporan : {{rightAddress.periodStart}} s/d
             {{rightAddress.periodEnd}}</span></p>
       </td>
@@ -435,54 +445,54 @@
   <table class="c22">
     <tr class="c12">
       <td class="c15" colspan="1" rowspan="1">
-        <p class="c11"><span class="c0">Tanggal Transaksi</span></p>
+        <p class="c11"><span class="c3">Tanggal Transaksi</span></p>
       </td>
       <td class="c13" colspan="1" rowspan="1">
-        <p class="c11"><span class="c0">Deskripsi Transaksi</span></p>
+        <p class="c11"><span class="c3">Deskripsi Transaksi</span></p>
       </td>
       <td class="c4" colspan="1" rowspan="1">
-        <p class="c11"><span class="c0">No. Transaksi</span></p>
+        <p class="c11"><span class="c3">No. Transaksi</span></p>
       </td>
       <td class="c4" colspan="1" rowspan="1">
-        <p class="c11"><span class="c0">NABDK per Unit Kripto</span></p>
+        <p class="c11"><span class="c3">NABDK per Unit Kripto</span></p>
       </td>
       <td class="c4" colspan="1" rowspan="1">
-        <p class="c11"><span class="c0">Jumlah Unit Kripto</span></p>
+        <p class="c11"><span class="c3">Jumlah Unit Kripto</span></p>
       </td>
       <td class="c4" colspan="1" rowspan="1">
-        <p class="c11"><span class="c0">Indikasi Harga Pasar</span></p>
+        <p class="c11"><span class="c3">Indikasi Harga Pasar</span></p>
       </td>
     </tr>
     <tbody>
       {{#transactions}}
       <tr>
         <td class="c15" colspan="1" rowspan="1">
-          <p class="c10"><span class="c2">{{date}}</span></p>
+          <p class="c10"><span class="c3">{{date}}</span></p>
         </td>
         <td class="c13" colspan="1" rowspan="1">
-          <p class="c10"><span class="c2">{{description}}</span></p>
+          <p class="c10"><span class="c3">{{description}}</span></p>
         </td>
         <td class="c4" colspan="1" rowspan="1">
-          <p class="c11 c14"><span class="c2">{{number}}</span></p>
+          <p class="c11 c14"><span class="c3">{{number}}</span></p>
         </td>
         <td class="c4" colspan="1" rowspan="1">
-          <p class="c8"><span class="c2">{{navPerUnit}}</span></p>
+          <p class="c8"><span class="c3">{{navPerUnit}}</span></p>
         </td>
         <td class="c4" colspan="1" rowspan="1">
-          <p class="c8 c17"><span class="c2">{{unit}}</span></p>
+          <p class="c8 c17"><span class="c3">{{unit}}</span></p>
         </td>
         <td class="c4" colspan="1" rowspan="1">
-          <p class="c8"><span class="c2">{{marketValue}}</span></p>
+          <p class="c8"><span class="c3">{{marketValue}}</span></p>
         </td>
       </tr>
       {{/transactions}}
     </tbody>
-
   </table>
-  <p class="c7"><span class="c2"></span></p>
-  <p class="c17 c24"><span class="c2">* NABDK = Nilai Aset Bersih Dana Kripto </span></p>
+  <p class="c7"><span class="c3"></span></p>
+  <p class="c17 c24"><span class="c3">* NABDK = Nilai Aset Bersih Dana Kripto </span></p>
   <p class="c6 c14"><span class="c2"></span></p>
   <p class="c1"><span class="c2"></span></p>
+  <p class="c6 c14"><span class="c2"></span></p>
   <p class="c6 c14"><span class="c2"></span></p>
   <p class="c6 c14"><span class="c2"></span></p>
   <p class="c6 c14"><span class="c2"></span></p>
