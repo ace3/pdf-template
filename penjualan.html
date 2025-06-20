@@ -481,7 +481,7 @@
       font-weight: 700;
       text-decoration: none;
       vertical-align: baseline;
-      font-size: 9pt;
+      font-size: 10pt;
       font-family: "Arial";
       font-style: normal
     }
@@ -849,11 +849,34 @@
   <p class="c3 c9"><span class="c13"></span></p>
   <p class="c3"><span class="c13">Bukti Transfer Dana Penjualan</span></p>
   <p class="c3 c9"><span class="c19"></span></p>
-  <p class="c3"><span class="c7">Bank Tujuan : {{bank.name}}</span></p>
-  <p class="c3"><span class="c7">No. Rekening Tujuan : {{bank.account}} a/n {{bank.accountName}}</span></p>
-  <p class="c3"><span class="c7">Nominal Terverifikasi : {{bank.verifiedAmount}}</span></p>
-  <p class="c3"><span class="c7">Tanggal &amp; Waktu Pembayaran : {{bank.paymentDateTime}}</span></p>
-  <p class="c3"><span class="c7">Ref. Transaksi : {{bank.reference}}</span></p>
+  <table style="width:100%; border-collapse:collapse; margin-bottom:8pt;">
+    <tr>
+      <td class="c7" style="padding: 2pt 8pt 2pt 0; text-align:left; white-space:nowrap; vertical-align:top;">Bank
+        Tujuan</td>
+      <td class="c7" style="padding: 2pt 0 2pt 0; text-align:left; vertical-align:top;">: {{bank.name}}</td>
+    </tr>
+    <tr>
+      <td class="c7" style="padding: 2pt 8pt 2pt 0; text-align:left; white-space:nowrap; vertical-align:top;">No.
+        Rekening Tujuan</td>
+      <td class="c7" style="padding: 2pt 0 2pt 0; text-align:left; vertical-align:top;">: {{bank.account}} a/n
+        {{bank.accountName}}</td>
+    </tr>
+    <tr>
+      <td class="c7" style="padding: 2pt 8pt 2pt 0; text-align:left; white-space:nowrap; vertical-align:top;">Nominal
+        Terverifikasi</td>
+      <td class="c7" style="padding: 2pt 0 2pt 0; text-align:left; vertical-align:top;">: {{bank.verifiedAmount}}</td>
+    </tr>
+    <tr>
+      <td class="c7" style="padding: 2pt 8pt 2pt 0; text-align:left; white-space:nowrap; vertical-align:top;">Tanggal
+        &amp; Waktu Pembayaran</td>
+      <td class="c7" style="padding: 2pt 0 2pt 0; text-align:left; vertical-align:top;">: {{bank.paymentDateTime}}</td>
+    </tr>
+    <tr>
+      <td class="c7" style="padding: 2pt 8pt 2pt 0; text-align:left; white-space:nowrap; vertical-align:top;">Ref.
+        Transaksi</td>
+      <td class="c7" style="padding: 2pt 0 2pt 0; text-align:left; vertical-align:top;">: {{bank.reference}}</td>
+    </tr>
+  </table>
   <p class="c3 c9"><span class="c19"></span></p>
   <p class="c21 c9 c31"><span class="c19"></span></p>
   <div>
