@@ -73,6 +73,7 @@ EXPOSE 3000
 
 # Set environment variables for Cloud Run
 ENV PORT=3000
+# TODO: Replace NODE_ENV with a more Go-appropriate variable like GO_ENV or ENV
 ENV NODE_ENV=production
 
 # Run the application
