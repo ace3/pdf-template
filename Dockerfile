@@ -1,58 +1,79 @@
-# Use an official Node.js runtime as a parent image
-FROM oven/bun:1.0.0
+# Build stage
+FROM golang:1.24-alpine AS builder
 
-# Install dependencies for Puppeteer (Chromium)
+# Install build dependencies
+RUN apk add --no-cache \
+  git \
+  gcc \
+  musl-dev
+
+WORKDIR /app
+
+# Copy go module files
+COPY go.mod go.sum ./
+RUN go mod download
+
+# Copy source code
+COPY . .
+
+# Build the application
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main .
+
+# Runtime stage - use Ubuntu for better Chrome/Chromium support
+FROM ubuntu:22.04
+
+# Install Chrome and dependencies
 RUN apt-get update && apt-get install -y \
   wget \
+  gnupg \
   ca-certificates \
   fonts-liberation \
-  libappindicator3-1 \
-  libasound2 \
-  libatk-bridge2.0-0 \
-  libatk1.0-0 \
-  libcups2 \
-  libdbus-1-3 \
-  libgdk-pixbuf2.0-0 \
-  libnspr4 \
+  fonts-dejavu-core \
+  fontconfig \
   libnss3 \
-  libx11-xcb1 \
+  libatk-bridge2.0-0 \
+  libdrm2 \
+  libxkbcommon0 \
   libxcomposite1 \
   libxdamage1 \
   libxrandr2 \
   libgbm1 \
-  libvulkan1 \
-  xdg-utils \
-  curl \
-  gnupg \
-  --no-install-recommends \
+  libxss1 \
+  libasound2 \
+  && wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
+  && echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list \
+  && apt-get update \
+  && apt-get install -y google-chrome-stable \
   && rm -rf /var/lib/apt/lists/*
 
-# Install Chromium
-RUN curl -sSL https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -o google-chrome-stable_current_amd64.deb && \
-  dpkg -i google-chrome-stable_current_amd64.deb && \
-  apt-get install -f -y && \
-  rm google-chrome-stable_current_amd64.deb
+# Create app directory
+WORKDIR /app
 
-# Set the working directory in the container
-WORKDIR /usr/src/app
+# Copy the binary from builder stage
+COPY --from=builder /app/main .
 
-# Copy the package.json and package-lock.json files
-COPY package*.json ./
+# Copy HTML templates and assets
+COPY *.html ./
+COPY images/ ./images/
 
-# Install any needed dependencies
-RUN bun install
+# Create a non-root user with proper home directory setup
+RUN groupadd -r appuser && useradd -r -g appuser -m appuser \
+  && mkdir -p /home/appuser/.local/share/applications \
+  && mkdir -p /home/appuser/.config/google-chrome \
+  && mkdir -p /tmp/.X11-unix \
+  && chmod 1777 /tmp/.X11-unix \
+  && chown -R appuser:appuser /home/appuser \
+  && chown -R appuser:appuser /app
 
-# Copy the rest of the application code
-COPY . .
+# Switch to non-root user
+USER appuser
 
-# Expose the port the app runs on
+# Expose port
 EXPOSE 3000
 
-# Set the environment variable to tell Google Cloud Run what port to listen on
-ENV PORT 3000
+# Set environment variables for Cloud Run
+ENV PORT=3000
+ENV NODE_ENV=production
 
-# Use the correct Chromium executable path for Puppeteer
-ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome-stable
-
-# Define the command to run the app
-CMD ["bun", "index.ts"]
+# Run the application
+CMD ["./main"]

@@ -1,0 +1,28 @@
+{
+  "leftAddress": {
+    "name": "Joshua Michael",
+    "street": "Jl. Paradise Timur Raya F22/11B",
+    "area": "Sunter Agung, Tanjung Priok",
+    "city": "Jakarta Utara",
+    "country": "Indonesia"
+  },
+  "rightAddress": {
+    "manager": "PT Dana Kripto Indonesia",
+    "email": "joshua.michael@usenobi.com",
+    "transactionDate": "20 Juni 2025"
+  },
+  "transaction": {
+    "type": "Pembelian",
+    "number": "D1918025KNJ1CBNEZTVE3TF",
+    "amount": "Rp 100.000",
+    "fee": "Rp 1.110",
+    "ppnPercent": "11%",
+    "product": "NOBI DANA KRIPTO INDEKS KELAS A",
+    "ppnAmount": "Rp 110",
+    "subscriptionFeePercent": "1%",
+    "subscriptionFeeAmount": "Rp 1.000",
+    "netAmount": "Rp 98.890",
+    "unit": "98,8900",
+    "navPerUnit": "Rp 1.000"
+  }
+}
