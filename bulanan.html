@@ -1,162 +1,196 @@
 <html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type" />
+    <style type="text/css">
+      @page {
+        size: A4;
+        margin: 0;
+      }
 
-<head>
-  <meta content="text/html; charset=UTF-8" http-equiv="content-type">
-  <style type="text/css">
-    @page {
-      size: A4;
-      margin: 0;
-    }
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Arial', sans-serif;
+        color: #333;
+        font-size: 10.5pt;
+        line-height: 1.4;
+      }
 
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: "Arial", sans-serif;
-      color: #333;
-      font-size: 10.5pt;
-      line-height: 1.4;
-    }
+      .reset-margin {
+        margin: 0;
+      }
 
-    .reset-margin {
-      margin: 0;
-    }
+      .c19 {
+        background-color: #fff;
+        width: 210mm;
+        height: 297mm;
+        padding: 15mm 20mm;
+        margin: 0 auto;
+        box-sizing: border-box;
+      }
 
-    .c19 {
-      background-color: #fff;
-      width: 210mm;
-      height: 297mm;
-      padding: 15mm 20mm;
-      margin: 0 auto;
-      box-sizing: border-box;
-    }
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        /* border-bottom: 2px solid #03bf91; */
+        padding-bottom: 10px;
+      }
 
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 20px;
-      /* border-bottom: 2px solid #03bf91; */
-      padding-bottom: 10px;
-    }
+      h2.report-title {
+        text-align: center;
+        font-size: 14pt;
+        font-weight: bold;
+        margin: 20px 0;
+      }
 
-    h2.report-title {
-      text-align: center;
-      font-size: 14pt;
-      font-weight: bold;
-      margin: 20px 0;
-    }
+      .info-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+      }
 
-    .info-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-bottom: 20px;
-    }
+      .info-table td {
+        padding: 6px 10px;
+        vertical-align: top;
+        font-size: 10pt;
+      }
 
-    .info-table td {
-      padding: 6px 10px;
-      vertical-align: top;
-      font-size: 10pt;
-    }
+      .transaction-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 9.5pt;
+        margin-bottom: 12px;
+      }
 
-    .transaction-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 9.5pt;
-      margin-bottom: 12px;
-    }
+      .transaction-table th {
+        background-color: #e9f8f4;
+        border: 1px solid #03bf91;
+        padding: 8px;
+        text-align: center;
+        font-weight: bold;
+      }
 
-    .transaction-table th {
-      background-color: #e9f8f4;
-      border: 1px solid #03bf91;
-      padding: 8px;
-      text-align: center;
-      font-weight: bold;
-    }
+      .transaction-table td {
+        border: 1px solid #03bf91;
+        padding: 6px 8px;
+      }
 
-    .transaction-table td {
-      border: 1px solid #03bf91;
-      padding: 6px 8px;
-    }
+      .transaction-table tr:nth-child(even) {
+        background-color: #f9fdfc;
+      }
 
-    .transaction-table tr:nth-child(even) {
-      background-color: #f9fdfc;
-    }
+      .note {
+        font-size: 9pt;
+        margin-top: 6px;
+        color: #555;
+      }
 
-    .note {
-      font-size: 9pt;
-      margin-top: 6px;
-      color: #555;
-    }
+      .omzet {
+        font-size: 11px;
+        color: #333;
+      }
 
-    footer {
-      text-align: center;
-      font-size: 9pt;
-      margin-top: 40px;
-      color: #666;
-      margin-top: 100px;
-    }
-  </style>
-</head>
+      footer {
+        text-align: center;
+        font-size: 9pt;
+        margin-top: 40px;
+        color: #666;
+        margin-top: 100px;
+      }
+    </style>
+  </head>
 
-<body class="c19">
-  <header>
-    <img src="https://storage.googleapis.com/dki-public/image1.png" style="height:26px;">
-    <img src="https://storage.googleapis.com/dki-public/Tennet_Logo___Horizontal.png" style="height:32px;">
-  </header>
+  <body class="c19">
+    <header>
+      <img
+        src="https://storage.googleapis.com/dki-public/image1.png"
+        style="height: 26px"
+      />
+      <img
+        src="https://storage.googleapis.com/dki-public/Tennet_Logo___Horizontal.png"
+        style="height: 32px"
+      />
+    </header>
 
-  <table class="transaction-table" style="margin-bottom: 40px;">
-    <tr>
-      <td style="max-width: 45%; width: 100%; vertical-align: top;">
-        <p style="font-weight:bold; margin-bottom: 4px; font-size: 9pt; font-weight: 700;" class="reset-margin">
-          {{leftAddress.name}}</p>
-        <p class="reset-margin" style="font-size: 9pt;">{{leftAddress.street}}</p>
-      </td>
-
-      <td style="vertical-align: top;">
-        <p class="reset-margin" style="margin-bottom: 4px; font-size: 9pt;">Manajer Dana Kripto:
-          {{rightAddress.manager}}</p>
-        <p class="reset-margin" style="margin-bottom: 4px; font-size: 9pt;">Email: {{rightAddress.email}}</p>
-        <p class="reset-margin" style="font-size: 9pt; line-height: 1.4;">Periode Pelaporan:
-          {{rightAddress.periodStart}} s/d {{rightAddress.periodEnd}}</p>
-      </td>
-    </tr>
-  </table>
-
-  <h2 class="report-title">Laporan Kepemilikan {{product}}</h2>
-
-  <table class="transaction-table">
-    <thead>
+    <table class="transaction-table" style="margin-bottom: 40px">
       <tr>
-        <th>Tanggal Transaksi</th>
-        <th>Deskripsi Transaksi</th>
-        <th>No. Transaksi</th>
-        <th>NABDK per Unit Kripto</th>
-        <th>Jumlah Unit Kripto</th>
-        <th>Indikasi Harga Pasar</th>
+        <td style="max-width: 45%; width: 100%; vertical-align: top">
+          <p
+            style="
+              font-weight: bold;
+              margin-bottom: 4px;
+              font-size: 9pt;
+              font-weight: 700;
+            "
+            class="reset-margin"
+          >
+            {{leftAddress.name}}
+          </p>
+          <p class="reset-margin" style="font-size: 9pt">
+            {{leftAddress.street}}
+          </p>
+        </td>
+
+        <td style="vertical-align: top">
+          <p class="reset-margin" style="margin-bottom: 4px; font-size: 9pt">
+            Manajer Dana Kripto: {{rightAddress.manager}}
+          </p>
+          <p class="reset-margin" style="margin-bottom: 4px; font-size: 9pt">
+            Email: {{rightAddress.email}}
+          </p>
+          <p class="reset-margin" style="font-size: 9pt; line-height: 1.4">
+            Periode Pelaporan: {{rightAddress.periodStart}} s/d
+            {{rightAddress.periodEnd}}
+          </p>
+        </td>
       </tr>
-    </thead>
-    <tbody>
-      {{#transactions}}
-      <tr>
-        <td>{{date}}</td>
-        <td>{{description}}</td>
-        <td style="text-align:center;">{{number}}</td>
-        <td style="text-align:right;">{{navPerUnit}}</td>
-        <td style="text-align:right;">{{unit}}</td>
-        <td style="text-align:right;">{{marketValue}}</td>
-      </tr>
-      {{/transactions}}
-    </tbody>
-  </table>
+    </table>
 
-  <p class="note">* NABDK = Nilai Aset Bersih Dana Kripto</p>
+    <h2 class="report-title">Laporan Kepemilikan {{product}}</h2>
 
-  <footer>
-    <p class="reset-margin">PT Dana Kripto Indonesia adalah peserta sandbox OJK</p>
-    <p class="reset-margin" style="margin-bottom: 8px;">dengan nomor surat S-196/IK.01/2025</p>
-    <p class="reset-margin">Bantuan: halo@nobi.id</p>
-  </footer>
-</body>
+    <table class="transaction-table">
+      <thead>
+        <tr>
+          <th>Tanggal Transaksi</th>
+          <th>Deskripsi Transaksi</th>
+          <th>No. Transaksi</th>
+          <th>NABDK per Unit Kripto</th>
+          <th>Jumlah Unit Kripto</th>
+          <th>Indikasi Harga Pasar</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#transactions}}
+        <tr>
+          <td>{{date}}</td>
+          <td>{{description}}</td>
+          <td style="text-align: center">{{number}}</td>
+          <td style="text-align: right">{{navPerUnit}}</td>
+          <td style="text-align: right">{{unit}}</td>
+          <td style="text-align: right">{{marketValue}}</td>
+        </tr>
+        {{/transactions}}
+      </tbody>
+    </table>
 
+    <p class="note">* NABDK = Nilai Aset Bersih Dana Kripto</p>
 
+    <table style="width: 100%; border-collapse: collapse">
+      <tbody>
+        {{pnlRows}}
+      </tbody>
+    </table>
+
+    <footer>
+      <p class="reset-margin">
+        PT Dana Kripto Indonesia adalah peserta sandbox OJK
+      </p>
+      <p class="reset-margin" style="margin-bottom: 8px">
+        dengan nomor surat S-196/IK.01/2025
+      </p>
+      <p class="reset-margin">Bantuan: halo@nobi.id</p>
+    </footer>
+  </body>
 </html>

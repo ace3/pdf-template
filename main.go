@@ -75,6 +75,18 @@ type BulananTransaction struct {
 	NoActivity  bool   `json:"noActivity"`
 }
 
+// PNLLine represents a single PNL entry
+type PNLLine struct {
+	Label  string `json:"label"`
+	Amount string `json:"amount"`
+}
+
+// PNL represents realized and unrealized PNL information
+type PNL struct {
+	Realized   PNLLine `json:"realized"`
+	Unrealized PNLLine `json:"unrealized"`
+}
+
 // PembelianPayload represents the payload for pembelian endpoint
 type PembelianPayload struct {
 	LeftAddress  Address      `json:"leftAddress"`
@@ -96,6 +108,7 @@ type BulananPayload struct {
 	RightAddress RightAddress         `json:"rightAddress"`
 	Product      string               `json:"product"`
 	Transactions []BulananTransaction `json:"transactions"`
+	PNL          *PNL                 `json:"pnl"`
 }
 
 // Global templates
@@ -495,6 +508,36 @@ func fillPenjualanTemplate(payload PenjualanPayload) string {
 func fillBulananTemplate(payload BulananPayload) string {
 	html := bulananHTMLTemplate
 
+	var pnlRows string
+	if payload.PNL != nil {
+		var pnlBuilder strings.Builder
+		if payload.PNL.Realized.Label != "" || payload.PNL.Realized.Amount != "" {
+			pnlBuilder.WriteString(fmt.Sprintf(`
+				<tr>
+					<td class="note" style="font-weight: bold; color: #333; width: 17%%">
+						%s
+					</td>
+					<td class="note" style="text-align: left; width: 30%%">
+						: %s
+					</td>
+				</tr>
+			`, payload.PNL.Realized.Label, payload.PNL.Realized.Amount))
+		}
+		if payload.PNL.Unrealized.Label != "" || payload.PNL.Unrealized.Amount != "" {
+			pnlBuilder.WriteString(fmt.Sprintf(`
+				<tr>
+					<td class="note" style="font-weight: bold; color: #333; width: 17%%">
+						%s
+					</td>
+					<td class="note" style="text-align: left; width: 30%%">
+						: %s
+					</td>
+				</tr>
+			`, payload.PNL.Unrealized.Label, payload.PNL.Unrealized.Amount))
+		}
+		pnlRows = pnlBuilder.String()
+	}
+
 	replacements := map[string]string{
 		"{{leftAddress.name}}":         payload.LeftAddress.Name,
 		"{{leftAddress.street}}":       payload.LeftAddress.Street,
@@ -506,13 +549,13 @@ func fillBulananTemplate(payload BulananPayload) string {
 		"{{product}}":                  payload.Product,
 		"{{rightAddress.periodStart}}": payload.RightAddress.PeriodStart,
 		"{{rightAddress.periodEnd}}":   payload.RightAddress.PeriodEnd,
+		"{{pnlRows}}":                  pnlRows,
 	}
 
 	for placeholder, value := range replacements {
 		html = strings.ReplaceAll(html, placeholder, value)
 	}
 
-	// Handle transactions table
 	var txRows strings.Builder
 	for _, tx := range payload.Transactions {
 		if tx.NoActivity {

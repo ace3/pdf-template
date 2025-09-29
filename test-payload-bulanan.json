@@ -1,37 +1,47 @@
 {
   "leftAddress": {
-    "name": "John Doe",
-    "street": " ",
+    "name": "Edy Senjaya",
+    "street": "GG Gudang Air No 05",
     "area": "Sunter Agung, Tanjung Priok",
-    "city": "Jakarta Utara",
+    "city": "",
     "country": "Indonesia"
   },
   "rightAddress": {
     "manager": "PT Dana Kripto Indonesia",
-    "email": "jd@usenobi.com",
-    "periodStart": "1 Mei 2025",
-    "periodEnd": "13 Juni 2025"
+    "email": "ignasius@usenobi.com",
+    "periodStart": "9 Agustus 2025",
+    "periodEnd": "11 Agustus 2025"
   },
-  "product": "NOBI DANA KRIPTO INDEKS KELAS A",
+  "product": "NOBI Dana Kripto Indeks Kelas A",
   "transactions": [
     {
-      "date": "01/05/2025",
+      "date": "09/08/2025",
       "description": "Saldo Awal",
       "number": "",
-      "navPerUnit": 1025.2461941,
-      "unit": 98.89,
-      "marketValue": "Rp 101.387"
+      "navPerUnit": "Rp 1.020",
+      "unit": "45244,1528",
+      "marketValue": "Rp 46.149.036"
     },
     {
       "noActivity": true
     },
     {
-      "date": "13/06/2025",
+      "date": "11/08/2025",
       "description": "Saldo Akhir",
       "number": "",
-      "navPerUnit": 1018.13591603,
-      "unit": 98.89,
-      "marketValue": "Rp 100.683"
+      "navPerUnit": "Rp 1.035",
+      "unit": "45244,1528",
+      "marketValue": "Rp 46.827.698"
     }
-  ]
+  ],
+  "pnl": {
+    "realized": {
+      "label": "Laba (Rugi) yang telah direalisasikan",
+      "amount": "Rp 0.00"
+    },
+    "unrealized": {
+      "label": "Laba (Rugi) yang belum direalisasikan",
+      "amount": "Rp 678.662"
+    }
+  }
 }
