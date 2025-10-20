@@ -469,6 +469,12 @@ func fillPembelianTemplate(payload PembelianPayload) string {
 func fillPenjualanTemplate(payload PenjualanPayload) string {
 	html := penjualanHTMLTemplate
 
+	var ppnListItem string
+	if strings.TrimSpace(payload.Transaction.PPNPercent) != "" || strings.TrimSpace(payload.Transaction.PPNAmount) != "" {
+		ppnListItem = fmt.Sprintf(`<li style="margin-left: 0;"><span class="c19">PPN (%s): %s</span></li>`,
+			payload.Transaction.PPNPercent, payload.Transaction.PPNAmount)
+	}
+
 	replacements := map[string]string{
 		"{{leftAddress.name}}":                 payload.LeftAddress.Name,
 		"{{leftAddress.street}}":               payload.LeftAddress.Street,
@@ -490,6 +496,7 @@ func fillPenjualanTemplate(payload PenjualanPayload) string {
 		"{{transaction.redemptionFeePercent}}": payload.Transaction.RedemptionFeePercent,
 		"{{transaction.redemptionFeeAmount}}":  payload.Transaction.RedemptionFeeAmount,
 		"{{transaction.netAmount}}":            payload.Transaction.NetAmount,
+		"{{ppnListItem}}":                      ppnListItem,
 		"{{bank.name}}":                        payload.Bank.Name,
 		"{{bank.account}}":                     payload.Bank.Account,
 		"{{bank.accountName}}":                 payload.Bank.AccountName,
